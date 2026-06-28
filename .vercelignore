@@ -1,0 +1,7 @@
+# Не деплоить на сайт — это служебные/локальные файлы
+.agents
+.claude
+.git
+apps-script
+skills-lock.json
+node_modules
