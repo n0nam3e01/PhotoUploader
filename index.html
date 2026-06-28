@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<!--
+  Одностраничный сайт для сбора фотографий.
+  Текст сразу на двух языках через «/» (русский / казахский).
+  Всё, что нужно заполнить, — в script.js (блоки PERSON и НАСТРОЙКА ЗАГРУЗКИ).
+-->
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Поделитесь фото / Фотомен бөлісіңіз</title>
+  <meta name="description" content="Загрузите ваши фотографии — это просто и займёт минуту." />
+  <meta name="theme-color" content="#f3f5f3" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <main class="page">
+
+    <!-- 1. ШАПКА: картинка-заставка и заголовок -->
+    <header class="hero reveal">
+      <!--
+        Картинка сверху. Если в script.js задан PERSON.portrait, сюда подставится фото.
+        Пока фото нет — показывается мягкий значок с фотографиями.
+      -->
+      <div class="portrait" id="portrait">
+        <svg class="portrait-placeholder" viewBox="0 0 24 24" aria-hidden="true">
+          <rect x="3" y="5" width="18" height="14" rx="2.5" />
+          <circle cx="8.5" cy="10" r="1.6" />
+          <path d="M21 16l-5-5L6 19" />
+        </svg>
+      </div>
+
+      <!-- Заголовок подставляется из PERSON.name в script.js -->
+      <h1 class="name" id="personName">Имя Фамилия</h1>
+    </header>
+
+    <!-- 2. ОБРАЩЕНИЕ К ПОСЕТИТЕЛЯМ (коротко, на двух языках) -->
+    <section class="appeal reveal">
+      <p class="appeal-text" data-i18n="appealText"></p>
+    </section>
+
+    <!-- 3. БЛОК ЗАГРУЗКИ -->
+    <section class="upload reveal" id="uploadSection">
+
+      <!-- Большая понятная зона выбора файлов (клик + drag-and-drop) -->
+      <div class="dropzone" id="dropzone">
+        <!-- accept ограничивает выбор изображениями; multiple — несколько файлов сразу -->
+        <input
+          type="file"
+          id="fileInput"
+          accept="image/jpeg,image/png,image/heic,image/heif,image/webp,.heic,.heif"
+          multiple
+          hidden
+        />
+        <svg class="dropzone-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 15V4m0 0L8 8m4-4 4 4" />
+          <path d="M4 16v2.5A1.5 1.5 0 0 0 5.5 20h13a1.5 1.5 0 0 0 1.5-1.5V16" />
+        </svg>
+        <button type="button" class="btn-choose" id="chooseBtn" data-i18n="chooseBtn"></button>
+        <p class="formats-hint" data-i18n="formatsHint"></p>
+      </div>
+
+      <!-- Счётчик выбранных фото (показывается, когда что-то выбрано) -->
+      <p class="count" id="count" hidden></p>
+
+      <!-- Превью выбранных фото -->
+      <div class="previews" id="previews" aria-live="polite"></div>
+
+      <!-- Сообщения о статусе/ошибках -->
+      <p class="message" id="message" role="status" aria-live="polite"></p>
+
+      <!-- Кнопка отправки (неактивна, пока ничего не выбрано) -->
+      <button type="button" class="btn-primary" id="submitBtn" data-i18n="submitBtn" disabled></button>
+    </section>
+
+    <!-- Благодарственное сообщение (показывается после успешной отправки) -->
+    <section class="thankyou" id="thankyou" hidden>
+      <div class="thankyou-mark">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg>
+      </div>
+      <h2 data-i18n="thankYouTitle">Спасибо / Рақмет</h2>
+      <p data-i18n="thankYouText"></p>
+      <button type="button" class="btn-choose" id="addMoreBtn" data-i18n="addMoreBtn"></button>
+    </section>
+
+    <!-- 4. ПОДВАЛ -->
+    <footer class="footer reveal">
+      <p class="footer-line" data-i18n="footerText"></p>
+      <!-- Необязательный контакт. Замените текст/ссылку или оставьте пустым в script.js. -->
+      <p class="footer-contact" data-i18n="footerContact"></p>
+    </footer>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

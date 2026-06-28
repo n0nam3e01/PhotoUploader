@@ -1,0 +1,382 @@
+/* =========================================================================
+   Сайт сбора фотографий — стили.
+   Палитра подобрана в OKLCH-пространстве, записана в hex для максимальной
+   совместимости (важно: многие откроют со старых телефонов).
+   Спокойный шалфейно-белый фон + глубокий хвойно-зелёный акцент.
+   Сделано под телефон (mobile-first): крупный текст, большие кнопки.
+   ========================================================================= */
+
+:root {
+  /* Поверхности */
+  --bg:          #f3f5f3; /* пале­вый шалфейно-белый (не «кремовый») */
+  --surface:     #ffffff; /* белые панели */
+  --line:        #dde3df; /* тонкие линии-границы */
+
+  /* Текст (высокий контраст — для лёгкого чтения) */
+  --ink:         #232e29; /* заголовки, почти чёрный */
+  --body:        #3c4742; /* основной текст */
+  --muted:       #5d6b64; /* второстепенный текст (≥4.5:1 на фоне) */
+
+  /* Акцент */
+  --accent:      #2f4a3e; /* глубокий хвойный зелёный */
+  --accent-press:#25382f; /* нажатое состояние */
+  --accent-tint: #e7ede9; /* мягкая зелёная подложка (hover / drag) */
+
+  /* Состояния */
+  --error:       #9a5142;
+  --error-bg:    #f6ebe7;
+
+  --radius:      16px;
+  --radius-sm:   12px;
+
+  /* Сильная ease-out кривая — анимации ощущаются «отзывчивыми» */
+  --ease-out:    cubic-bezier(0.23, 1, 0.32, 1);
+
+  /* Шрифты — системные, без внешних зависимостей.
+     Заголовки: тёплый старо-стильный серив (Iowan/Palatino), это мягче Georgia.
+     Текст: гуманистический системный гротеск. Пара «серив + гротеск» = контраст. */
+  --serif: 'Iowan Old Style', 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia, serif;
+  --sans:  -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--body);
+  font-family: var(--sans);
+  font-size: 19px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Видимый фокус для доступности (клавиатура) */
+:focus-visible {
+  outline: 2.5px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ---------- Контейнер страницы ---------- */
+.page {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 40px 22px 56px;
+}
+
+/* ---------- Появление блоков (мягкий каскад) ---------- */
+.reveal { animation: rise 640ms var(--ease-out) both; }
+.hero   { animation-delay: 40ms; }
+.appeal { animation-delay: 130ms; }
+.upload { animation-delay: 220ms; }
+.footer { animation-delay: 320ms; }
+@keyframes rise {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- Шапка ---------- */
+.hero {
+  text-align: center;
+  padding: 8px 0 30px;
+}
+.portrait {
+  width: 132px;
+  height: 132px;
+  margin: 0 auto 24px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--surface);
+  box-shadow: 0 0 0 1px var(--line), 0 10px 28px -16px rgba(35, 46, 41, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.portrait-placeholder {
+  width: 46%;
+  height: 46%;
+  fill: none;
+  stroke: #aab4ad;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.name {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(2rem, 8vw, 2.55rem);
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin: 0;
+  text-wrap: balance;
+}
+
+/* ---------- Обращение ---------- */
+.appeal {
+  text-align: center;
+  margin: 0 auto 38px;
+  max-width: 34rem;
+}
+.appeal-text {
+  margin: 0;
+  font-size: 1.18rem;
+  line-height: 1.55;
+  color: var(--body);
+  text-wrap: pretty;
+}
+
+/* ---------- Блок загрузки (единственная «панель» на странице) ---------- */
+.upload {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 22px;
+}
+
+/* Зона выбора файлов */
+.dropzone {
+  border: 1.5px dashed #c8d2cc;
+  border-radius: var(--radius-sm);
+  padding: 30px 18px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 200ms var(--ease-out), background 200ms var(--ease-out);
+}
+.dropzone.is-dragover {
+  border-color: var(--accent);
+  background: var(--accent-tint);
+}
+.dropzone-icon {
+  width: 44px;
+  height: 44px;
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  margin-bottom: 16px;
+}
+.formats-hint {
+  margin: 16px 0 0;
+  color: var(--muted);
+  font-size: 0.84rem;
+}
+
+/* ---------- Кнопки (крупные, отзывчивые) ---------- */
+.btn-primary,
+.btn-choose {
+  font: inherit;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  min-height: 56px;
+  transition: background 180ms var(--ease-out), color 180ms var(--ease-out),
+              transform 140ms var(--ease-out), box-shadow 180ms var(--ease-out), opacity 180ms ease;
+}
+/* «Выбрать фото» — приглашающая кнопка */
+.btn-choose {
+  display: inline-block;
+  width: 100%;
+  max-width: 300px;
+  padding: 15px 22px;
+  border: 1.5px solid var(--accent);
+  background: var(--surface);
+  color: var(--accent);
+  font-size: 1.08rem;
+  font-weight: 600;
+}
+/* «Отправить» — главное действие */
+.btn-primary {
+  display: block;
+  width: 100%;
+  margin-top: 22px;
+  padding: 17px 22px;
+  border: none;
+  background: var(--accent);
+  color: #fff;
+  font-size: 1.18rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  box-shadow: 0 8px 20px -12px rgba(47, 74, 62, 0.7);
+}
+.btn-primary:disabled {
+  opacity: 0.38;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+/* Нажатие — лёгкое сжатие (мгновенная тактильная обратная связь) */
+.btn-primary:not(:disabled):active,
+.btn-choose:active { transform: scale(0.975); }
+/* Hover только на устройствах с настоящим курсором */
+@media (hover: hover) and (pointer: fine) {
+  .btn-primary:not(:disabled):hover { background: var(--accent-press); }
+  .btn-choose:hover { background: var(--accent-tint); }
+}
+
+/* ---------- Счётчик выбранных ---------- */
+.count {
+  margin: 18px 0 0;
+  text-align: center;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+/* ---------- Превью ---------- */
+.previews {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+  gap: 10px;
+  margin-top: 14px;
+}
+.previews:empty { margin-top: 0; }
+.preview {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: var(--accent-tint);
+  box-shadow: 0 0 0 1px var(--line);
+  /* мягкое каскадное появление каждого превью */
+  animation: pop 360ms var(--ease-out) both;
+  animation-delay: calc(var(--i, 0) * 40ms);
+}
+@keyframes pop {
+  from { opacity: 0; transform: scale(0.94); }
+  to   { opacity: 1; transform: scale(1); }
+}
+.preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+/* Для файлов без превью (например, HEIC браузер не рисует) */
+.preview-file {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 8px;
+  text-align: center;
+  font-size: 0.7rem;
+  color: var(--muted);
+  word-break: break-word;
+}
+.preview-file svg {
+  width: 24px; height: 24px;
+  fill: none; stroke: var(--muted); stroke-width: 1.6;
+  margin-bottom: 5px;
+}
+/* Кнопка удаления — крупная, легко попасть пальцем */
+.preview-remove {
+  position: absolute;
+  top: 5px; right: 5px;
+  width: 30px; height: 30px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(35, 46, 41, 0.62);
+  color: #fff;
+  font-size: 19px; line-height: 1;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 160ms var(--ease-out), transform 140ms var(--ease-out);
+}
+.preview-remove:active { transform: scale(0.9); }
+@media (hover: hover) and (pointer: fine) {
+  .preview-remove:hover { background: rgba(35, 46, 41, 0.85); }
+}
+
+/* ---------- Сообщения ---------- */
+.message {
+  margin: 18px 0 0;
+  text-align: center;
+  font-size: 1.02rem;
+  min-height: 1.2em;
+}
+.message:empty { margin: 0; min-height: 0; }
+.message.is-error {
+  color: var(--error);
+  font-weight: 600;
+  background: var(--error-bg);
+  border-radius: 10px;
+  padding: 12px 14px;
+}
+.message.is-loading { color: var(--muted); }
+
+/* ---------- Благодарность ---------- */
+.thankyou {
+  text-align: center;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 40px 26px;
+  /* появляется, когда снимается атрибут hidden */
+  animation: rise 520ms var(--ease-out) both;
+}
+.thankyou-mark {
+  width: 60px; height: 60px;
+  margin: 0 auto 18px;
+  border-radius: 50%;
+  background: var(--accent-tint);
+  display: flex; align-items: center; justify-content: center;
+  animation: pop 460ms var(--ease-out) 120ms both;
+}
+.thankyou-mark svg {
+  width: 30px; height: 30px;
+  fill: none; stroke: var(--accent);
+  stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round;
+}
+.thankyou h2 {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 1.6rem;
+  color: var(--ink);
+  margin: 0 0 10px;
+}
+.thankyou p {
+  color: var(--body);
+  margin: 0 0 24px;
+  font-size: 1.1rem;
+  text-wrap: pretty;
+}
+
+/* ---------- Подвал ---------- */
+.footer {
+  text-align: center;
+  padding: 36px 10px 0;
+  color: var(--muted);
+}
+.footer-line {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--body);
+  margin: 0 0 8px;
+}
+.footer-contact { font-size: 0.9rem; margin: 0; }
+.footer-contact a { color: var(--accent); }
+
+/* ---------- Чуть больше экран ---------- */
+@media (min-width: 540px) {
+  .page { padding-top: 56px; }
+  .upload { padding: 28px; }
+}
+
+/* ---------- Уважение к «уменьшить движение» ----------
+   Движение убираем, плавность цвета оставляем; контент всегда виден. */
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .preview, .thankyou, .thankyou-mark { animation: none !important; }
+  * { transition-duration: 120ms !important; }
+  .btn-primary:active, .btn-choose:active, .preview-remove:active { transform: none; }
+}
